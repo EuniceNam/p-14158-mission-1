@@ -1,50 +1,48 @@
-package com.back.domain.member.member.service;
+package com.back.domain.member.member.service
 
-import com.back.domain.member.member.entity.Member;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.transaction.annotation.Transactional
 
 @ActiveProfiles("test")
 @SpringBootTest
 @Transactional
-public class MemberServiceTest {
-    @Autowired
-    private MemberService memberService;
+class MemberServiceTest @Autowired constructor(
+    private val memberService: MemberService
+) {
 
     @Test
     @DisplayName("회원 개수 조회")
-    void t1() {
-        long count = memberService.count();
+    fun t1() {
+        val count = memberService.count()
 
-        assertThat(count).isEqualTo(5);
+        assertThat(count).isEqualTo(5)
     }
 
     @Test
     @DisplayName("회원 가입")
-    void t2() {
-        Member member = memberService.join("user4", "1234", "유저4");
+    fun t2() {
+        val member = memberService.join("user4", "1234", "유저4")
 
-        assertThat(member.getId()).isGreaterThan(0);
-        assertThat(member.getUsername()).isEqualTo("user4");
-        assertThat(member.getPassword()).isEqualTo("1234");
-        assertThat(member.getNickname()).isEqualTo("유저4");
+        assertThat(member.id).isGreaterThan(0)
+        assertThat(member.username).isEqualTo("user4")
+        assertThat(member.password).isEqualTo("1234")
+        assertThat(member.nickname).isEqualTo("유저4")
     }
 
     @Test
     @DisplayName("회원 가입 후 개수 증가")
-    void t3() {
-        long beforeCount = memberService.count();
+    fun t3() {
+        val beforeCount = memberService.count()
 
-        memberService.join("user5", "1234", "유저5");
+        memberService.join("user5", "1234", "유저5")
 
-        long afterCount = memberService.count();
+        val afterCount = memberService.count()
 
-        assertThat(afterCount).isEqualTo(beforeCount + 1);
+        assertThat(afterCount).isEqualTo(beforeCount + 1)
     }
 }
