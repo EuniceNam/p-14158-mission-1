@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne
 class Post(
     author: Member,
     var title: String,
-    @Column(columnDefinition = "TEXT") var content: String
+    @field:Column(columnDefinition = "TEXT") var content: String
 ) : BaseEntity() {
     @ManyToOne
     var author: Member = author
