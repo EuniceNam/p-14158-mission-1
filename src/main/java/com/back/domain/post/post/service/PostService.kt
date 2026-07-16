@@ -1,35 +1,23 @@
-package com.back.domain.post.post.service;
+package com.back.domain.post.post.service
 
-import com.back.domain.member.member.entity.Member;
-import com.back.domain.post.post.entity.Post;
-import com.back.domain.post.post.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import com.back.domain.member.member.entity.Member
+import com.back.domain.post.post.entity.Post
+import com.back.domain.post.post.repository.PostRepository
+import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
-@RequiredArgsConstructor
-public class PostService {
-    private final PostRepository postRepository;
+class PostService(private val postRepository: PostRepository) {
 
-    public long count() {
-        return postRepository.count();
+    fun count(): Long = postRepository.count()
+
+    fun findById(id: Int): Post? = postRepository.findById(id).getOrNull()
+
+    fun modify(post: Post, title: String, content: String) {
+        post.title = title
+        post.content = content
     }
 
-    public Optional<Post> findById(int id) {
-        return postRepository.findById(id);
-    }
-
-    public void modify(Post post, String title, String content) {
-        post.setTitle(title);
-        post.setContent(content);
-    }
-
-    public Post write(Member author, String title, String content) {
-        Post post = new Post(author, title, content);
-        postRepository.save(post);
-
-        return post;
-    }
+    fun write(author: Member, title: String, content: String): Post =
+        Post(author, title, content).also { postRepository.save(it) }
 }
