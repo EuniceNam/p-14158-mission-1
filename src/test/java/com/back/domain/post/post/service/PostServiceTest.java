@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -34,19 +32,19 @@ public class PostServiceTest {
     @Test
     @DisplayName("id로 글 조회")
     void t2() {
-        Optional<Post> opPost = postService.findById(2);
+        Post post = postService.findById(2);
 
-        assertThat(opPost).isPresent();
-        assertThat(opPost.get().getTitle()).isEqualTo("제목 2");
-        assertThat(opPost.get().getContent()).isEqualTo("내용 2");
+        assertThat(post).isNotNull();
+        assertThat(post.getTitle()).isEqualTo("제목 2");
+        assertThat(post.getContent()).isEqualTo("내용 2");
     }
 
     @Test
     @DisplayName("존재하지 않는 id로 글 조회시 빈 값")
     void t3() {
-        Optional<Post> opPost = postService.findById(9999);
+        Post post = postService.findById(9999);
 
-        assertThat(opPost).isEmpty();
+        assertThat(post).isNull();
     }
 
     @Test
@@ -66,7 +64,7 @@ public class PostServiceTest {
     @Test
     @DisplayName("글 수정")
     void t5() {
-        Post post = postService.findById(1).get();
+        Post post = postService.findById(1);
 
         postService.modify(post, "제목 수정", "내용 수정");
 
