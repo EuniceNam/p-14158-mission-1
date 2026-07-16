@@ -1,27 +1,16 @@
-package com.back.domain.member.member.entity;
+package com.back.domain.member.member.entity
 
-import com.back.global.jpa.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.back.global.jpa.entity.BaseEntity
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-public class Member extends BaseEntity {
+class Member(username: String, password: String, nickname: String) : BaseEntity() {
     @Column(unique = true)
-    private String username;
-    private String password;
-    private String nickname;
-
-    public Member(String username, String password, String nickname) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-    }
+    var username: String = username
+        protected set
+    var password: String = password
+        protected set
+    var nickname: String = nickname
+        protected set
 }
